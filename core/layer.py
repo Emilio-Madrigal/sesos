@@ -1,5 +1,5 @@
 import numpy as np
-from neurona import Neurona
+from .neurona import Neurona
 
 class Layer:
     def __init__(self, cantidad_entradas, cantidad_neuronas):
