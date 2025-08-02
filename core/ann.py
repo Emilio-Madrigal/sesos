@@ -2,8 +2,14 @@ import numpy as np
 from .layer import Layer
 
 class ANN:
-    def __init__(self):
+    def __init__(self,estructura):
         self.layers = []
+        
+        for i in range(1, len(estructura)):
+            cantidad_entradas = estructura[i - 1]
+            cantidad_neuronas = estructura[i]
+            self.layers.append(Layer(cantidad_neuronas, cantidad_entradas))
+
         self.loss_list = []
 
     def add_layer(self, cantidad_entradas, cantidad_neuronas):

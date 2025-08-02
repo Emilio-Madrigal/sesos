@@ -14,14 +14,13 @@ class Neurona:
         salida = sigmoide(peso ⋅ entrada + bias)
         """
         self.entradas=entradas
+        print(f"pesos.shape = {self.pesos.shape}, entradas.shape = {entradas.shape}")
         self.total_entradas=np.dot(self.pesos,entradas)+self.bias
         self.salidas=fa.sigmoide(self.total_entradas)
         return self.salidas
 
     def backward(self, error_salida, tasa_aprendizaje):
-        """
-        Ajusta los pesos y el sesgo usando el error recibido.
-        """
+
         derivada = fa.derivada_sigmoide(self.total_entrada)
         error_total = error_salida * derivada 
         ajuste_pesos = error_total * self.entradas
