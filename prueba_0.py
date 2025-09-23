@@ -22,10 +22,11 @@ historial = modelo.fit(celsiudos, fahrenheit, epochs=600, verbose=False)
 print("Modelo entrenado")
 
 print(f"Predicción para 100°C: {modelo.predict(np.array([100.0]), verbose=0)[0][0]:.1f} °F")
+print(f"Predicción para 0°C: {modelo.predict(np.array([28.0]), verbose=0)[0][0]:.1f} °F")
 print(f"Predicción para 0°C: {modelo.predict(np.array([0.0]), verbose=0)[0][0]:.1f} °F")
-print("\n¡Cierra la ventana de la gráfica para terminar el programa!")
 
-plt.xlabel('epochs')
+
+plt.xlabel('epocas')
 plt.ylabel('magnitud perdida')
 plt.plot(historial.history['loss'])
 plt.title('Pérdida durante el entrenamiento')
