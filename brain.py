@@ -42,20 +42,20 @@ def guardar_modelo(modelo, nombre_archivo="modelo_entredado"):
 
 def cargar_modelo(nombre_archivo):
     try:
-        ruta=f"modelos_guardados/{nombre_archivo}.npz"
+        ruta = f"modelos_guardados/{nombre_archivo}.npz"
 
         if not os.path.exists(ruta):
             print(f"no habia nada en esta ruta: {ruta}")
             return None
         
-        datos=np.load(ruta,allow_pickle=True)
-        estructura=datos['estructura'].tolist()
-        activaciones=datos['activaciones'].tolist()
+        datos = np.load(ruta, allow_pickle=True)
+        estructura = datos['estructura'].tolist()
+        activaciones = datos['activaciones'].tolist()
 
-        modelo=ANN(estructura,activaciones)
+        modelo = ANN(estructura, activaciones)
 
-        pesos_g=datos['pesos']
-        bias_g=['bias']
+        pesos_g = datos['pesos']
+        bias_g = datos['bias']
 
         for i, layer in enumerate(modelo.layers):
             for j, neurona in enumerate(layer.neuronas):
@@ -63,13 +63,14 @@ def cargar_modelo(nombre_archivo):
                 neurona.bias.assign(bias_g[i][j])
         
         if 'loss_list' in datos:
-            modelo.loss_list = datos['loss_list'].toList()
+            modelo.loss_list = datos['loss_list'].tolist()
         
         print(f"modelo cargado")
         return modelo
     except Exception as e:
         print(f"no se cargo el modelo :( {e}")
         return None
+
 
 def entrenar_modelo():
     print("entrenando...")
@@ -147,9 +148,9 @@ def probar_modelo(modelo):
                 print("los valores deben ser 0 o 1")
                 continue
             
-            entrada_tf = tf.constant([[a, b]], dtype=tf.float32)
+            entrada_tf = tf.constant([a, b], dtype=tf.float32)
             prediccion = modelo.forward(entrada_tf)
-            resultado = float(prediccion.numpy().squeeze())
+            resultado = float(prediccion.numpy())
             resultado_binario = 1 if resultado > 0.5 else 0
             
             esperado_and = 1 if (a == 1 and b == 1) else 0
