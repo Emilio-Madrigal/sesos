@@ -1,33 +1,15 @@
 import tensorflow as tf
 import numpy as np
-import matplotlib.pyplot as plt
 
-celsiudos = np.array([-40, -10, 0, 8, 15, 22, 38], dtype=float)
-fahrenheit = np.array([-40, 14, 32, 46, 59, 72, 100], dtype=float)
+X = np.array([[0,0],[0,1],[1,0],[1,1]], dtype=np.float32)
+y = np.array([[0],[0],[0],[1]], dtype=np.float32)
 
-#capa=tf.keras.layers.Dense(units=1,input_shape=[1])
-#modelo=tf.keras.Sequential([capa])
-
-oculta1=tf.keras.layers.Dense(units=3,input_shape=[1])
-oculta2=tf.keras.layers.Dense(units=3)
-salida=tf.keras.layers.Dense(units=1)
-modelo=tf.keras.Sequential([oculta1,oculta2,salida])
-
-modelo.compile(
-    optimizer=tf.keras.optimizers.Adam(0.1),
-    loss='mean_squared_error'
-)
-
-historial = modelo.fit(celsiudos, fahrenheit, epochs=600, verbose=False)
-print("Modelo entrenado")
-
-print(f"Predicción para 100°C: {modelo.predict(np.array([100.0]), verbose=0)[0][0]:.1f} °F")
-print(f"Predicción para 0°C: {modelo.predict(np.array([28.0]), verbose=0)[0][0]:.1f} °F")
-print(f"Predicción para 0°C: {modelo.predict(np.array([0.0]), verbose=0)[0][0]:.1f} °F")
-
-
-plt.xlabel('epocas')
-plt.ylabel('magnitud perdida')
-plt.plot(historial.history['loss'])
-plt.title('Pérdida durante el entrenamiento')
-plt.show()
+tf.random.set_seed(42)
+model = tf.keras.Sequential([
+    tf.keras.layers.Dense(1, input_shape=(2,), activation='sigmoid', kernel_initializer='glorot_uniform')
+])
+model.compile(optimizer=tf.keras.optimizers.Adam(0.01),
+              loss=tf.keras.losses.BinaryCrossentropy(),
+              metrics=['accuracy'])
+model.fit(X, y, epochs=2000, verbose=0)
+print("Predicciones Keras:", model.predict(X).round(3).flatten())

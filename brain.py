@@ -63,7 +63,7 @@ def cargar_modelo(nombre_archivo):
                 neurona.bias.assign(bias_g[i][j])
         
         if 'loss_list' in datos:
-            modelo.loss_list=datos['loss_list'].toList()
+            modelo.loss_list = datos['loss_list'].toList()
         
         print(f"modelo cargado")
         return modelo
@@ -147,9 +147,9 @@ def probar_modelo(modelo):
                 print("los valores deben ser 0 o 1")
                 continue
             
-            entrada_tf = tf.constant([a, b], dtype=tf.float32)
+            entrada_tf = tf.constant([[a, b]], dtype=tf.float32)
             prediccion = modelo.forward(entrada_tf)
-            resultado = float(prediccion.numpy())
+            resultado = float(prediccion.numpy().squeeze())
             resultado_binario = 1 if resultado > 0.5 else 0
             
             esperado_and = 1 if (a == 1 and b == 1) else 0
