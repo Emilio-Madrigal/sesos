@@ -19,7 +19,7 @@ class Layer:
     
     def backward(self, errores_salida, tasa_aprendizaje):
         errores_entrada = tf.zeros_like(self.neuronas[0].ultima_entrada)
-        for i, neurona in enumerate(self.neuronas):  # Corregido: era "Neurona"
+        for i, neurona in enumerate(self.neuronas):
             error_neurona = neurona.backward(errores_salida[i], tasa_aprendizaje)
             errores_entrada += error_neurona
         
